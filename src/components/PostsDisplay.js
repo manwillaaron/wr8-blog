@@ -94,27 +94,9 @@ export default class PostsDisplay extends Component {
                     this.toggleAdmin()
                 }
                     }>Logout</button>}
-                {
-                    this.state.toggleAdminLogin ? (
-                        <Auth submitCredentials={this.submitCredentials} />
-                    ) : (
-                        !this.state.isAdmin && <button onClick={() => this.toggleLogin()}>Login</button>
-                        )
 
-                }
                 <input placeholder='Search' onChange={(e) => this.handleSearch(e.target.value)} />
-                {
-                    this.state.toggleAorE ? (
-                    <PostInputs
-                        savePost={this.savePost}
-                        editingPost={this.state.editingPost}
-                        toggle={this.toggle}
-                        addPost={this.addPost}
-                    />
-                ) : (
-                        <button onClick={() => this.toggle()}>add</button>
-                    )
-                    }
+              
                 {filteredPosts.map(post => (
                         <Post
                             isAdmin={this.state.isAdmin}

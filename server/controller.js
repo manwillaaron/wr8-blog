@@ -1,30 +1,39 @@
-const posts = require('./data')
-let id = 21
+
 
 module.exports = {
     addPost: (req, res) => {
-        posts.unshift({id, ...req.body})
-        id++
-        res.status(200).send(posts)
+        const db = req.app.get('db')
+        const { title, content, img } = req.body
+        db.add_post({ 
+            title2: title, 
+            content2: content, 
+            img2: img 
+        }).then(posts=> {
+            console.log(posts)
+            res.status(200).send(posts)
+        })
     },
     getAllPosts: (req, res) => {
-        res.status(200).send(posts)
+        const db = req.app.get('db')
+        db.get_all_posts().then(posts => {
+            res.status(200).send(posts)
+        })
     },
-    deletePost:(req, res)=>{
+    deletePost: (req, res) => {
+        const db = req.app.get('db')
         const {id} = req.params
-        const index = posts.findIndex(post => post.id === +id)
-        posts.splice(index, 1)
-        res.status(200).send(posts)
+        db.delete_post([id]).then(posts=> {
+            res.status(200).send(posts)
+        })
     },
-    editPost: (req,res)=>{
-        console.log(req.body)
-        const {title, img, content } = req.body
-        const {id} = req.params
-        const index = posts.findIndex(post => post.id === +id)
-        const newPost = {id, title, img , content}
-        posts[index] = newPost
-        // posts.splice(index, 1, newPost)
-        res.status(200).send(posts)
+    editPost: (req, res) => {
+        const db = req.app.get('db')
+        const { title, img, content } = req.body
+        const { id } = req.params
+        db.edit_post([ title, content, img ,id ])
+        .then(posts=>{
+            res.status(200).send(posts)
+        })
     }
- 
+
 }

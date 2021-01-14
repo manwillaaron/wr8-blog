@@ -13,14 +13,7 @@ export default class PostInputs extends Component {
     }
 
     componentDidMount() {
-        if (this.props.editingPost.id) {
-            const { title, content, img } = this.props.editingPost
-            this.setState({
-                titleI: title,
-                contentI: content,
-                imgI: img
-            })
-        }
+    
     }
 
     add = () => {
@@ -67,7 +60,7 @@ export default class PostInputs extends Component {
                         name='contentI'
                         onChange={(e) => this.handleChange(e.target)}
                     />
-                    {this.props.editingPost.id ? (
+                    {this.props.match.params && this.props.match.params.id ? (
                         <button onClick={this.save}>Save</button>
                         ):(
                         <button  onClick={this.add}>Submit</button>
